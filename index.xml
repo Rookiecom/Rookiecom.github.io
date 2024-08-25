@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rookiecom</title>
+    <link>https://Rookiecom.github.io/</link>
+    <description>Rookiecom</description>
+    <generator>Hugo 0.133.0 &amp; FixIt v0.3.10-08d4c12c</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 01 Mar 2024 17:10:04 +0800</lastBuildDate>
+    <atom:link href="https://Rookiecom.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我的第一篇文章</title>
+      <link>https://Rookiecom.github.io/posts/first/</link>
+      <pubDate>Fri, 01 Mar 2024 17:10:04 +0800</pubDate>
+      <guid>https://Rookiecom.github.io/posts/first/</guid>
+      <description>fdsafsd&#xA;二级标题 三级标题 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 class pizzaStore { private: public: pizza order(string type) { pizza *p; if(type == &amp;#34;cheese&amp;#34;) { p = new cheesePizza; } else if(type == &amp;#34;bacon&amp;#34;) { p = new baconPizza; } p.prepare(); p.bake(); p.cut(); p.box(); return p; } }; \begin{CD} A @&amp;gt;a&amp;gt;&amp;gt; B \\ @VbVV @AAcA \\ C @= D \end{CD}</description>
+    </item>
+  </channel>
+</rss>
