@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Rookiecom</title>
-    <link>https://Rookiecom.github.io/</link>
+    <title>设计/模式 - 标签 - Rookiecom</title>
+    <link>https://Rookiecom.github.io/tags/%E8%AE%BE%E8%AE%A1/%E6%A8%A1%E5%BC%8F/</link>
     <description>Rookiecom</description>
     <generator>Hugo 0.133.0 &amp; FixIt v0.3.10-08d4c12c</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 30 Mar 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://Rookiecom.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>go context底层原理</title>
-      <link>https://Rookiecom.github.io/posts/go-context%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/</link>
-      <pubDate>Sat, 30 Mar 2024 00:00:00 +0000</pubDate>
-      <guid>https://Rookiecom.github.io/posts/go-context%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/</guid>
-      <description>前言 go 中常常使用 context 来作为协程之间传递消息。使用场景常常有：&#xA;传递一个任务的元信息：在微服务中，常常将 traceID 写入在上下文的键值对中，用于追踪一个请求的调用链。 传递取消信号：父协程并发开启子协程执行任务，但是父协程也许会检测到什么信号（时间截止、任务结束），这个时候父协程可以使用 context 的取消功能结束所有子协程。 在使用的过程中，我常常有疑问：&#xA;不同函数之间传递的 context 对象是值引用还是指针引用 父子协程同时访问 context 并发安全吗 父协程执行取消函数做了什么？子协程开启的孙协程也会终止吗？ 带着问题，我阅读了 context 的源码（go 版本 1.19），了解了 context 的设计。&#xA;类型 上下文一共有以下 4 种类型：&#xA;emptyCtx：最基础的 context，只是表征一个类型 valueCtx：带键值对的context cancelCtx：带取消功能的context timerCtx：带定时取消功能的 context 在这 4 中类型中，最重要的是 valueCtx、cancelCtx，两者可以构建 context 包的几乎所有功能。&#xA;context 包定义了一组接口：&#xA;1 2 3 4 5 6 type Context interface { Deadline() (deadline time.Time, ok bool) // 用于子协程获取deadline Done() &amp;lt;-chan struct{} // 用于子协程获取管道的取消信号 Err() error // 返回上下文被取消或超时时的错误信息 Value(key any) any // 用于获取键值对 } 只要实现这一组接口就算就能算作 Context 类型。</description>
-    </item>
+    <lastBuildDate>Fri, 01 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://Rookiecom.github.io/tags/%E8%AE%BE%E8%AE%A1/%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>装饰者模式</title>
       <link>https://Rookiecom.github.io/posts/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/</link>

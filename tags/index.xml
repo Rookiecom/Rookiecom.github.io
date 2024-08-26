@@ -6,21 +6,21 @@
     <description>Rookiecom</description>
     <generator>Hugo 0.133.0 &amp; FixIt v0.3.10-08d4c12c</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 01 Mar 2024 17:10:04 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 30 Mar 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://Rookiecom.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>地方</title>
-      <link>https://Rookiecom.github.io/tags/%E5%9C%B0%E6%96%B9/</link>
-      <pubDate>Fri, 01 Mar 2024 17:10:04 +0800</pubDate>
-      <guid>https://Rookiecom.github.io/tags/%E5%9C%B0%E6%96%B9/</guid>
-      <description>地方</description>
+      <title>Language/Go</title>
+      <link>https://Rookiecom.github.io/tags/language/go/</link>
+      <pubDate>Sat, 30 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://Rookiecom.github.io/tags/language/go/</guid>
+      <description>Language/Go</description>
     </item>
     <item>
-      <title>方法</title>
-      <link>https://Rookiecom.github.io/tags/%E6%96%B9%E6%B3%95/</link>
-      <pubDate>Fri, 01 Mar 2024 17:10:04 +0800</pubDate>
-      <guid>https://Rookiecom.github.io/tags/%E6%96%B9%E6%B3%95/</guid>
-      <description>方法</description>
+      <title>设计/模式</title>
+      <link>https://Rookiecom.github.io/tags/%E8%AE%BE%E8%AE%A1/%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Fri, 01 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://Rookiecom.github.io/tags/%E8%AE%BE%E8%AE%A1/%E6%A8%A1%E5%BC%8F/</guid>
+      <description>设计/模式</description>
     </item>
   </channel>
 </rss>
