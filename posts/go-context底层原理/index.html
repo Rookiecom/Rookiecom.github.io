@@ -23,7 +23,7 @@ context 包定义了一组接口：
 1 2 3 4 5 6 type Context interface { Deadline() (deadline time.Time, ok bool) // 用于子协程获取deadline Done() &lt;-chan struct{} // 用于子协程获取管道的取消信号 Err() error // 返回上下文被取消或超时时的错误信息 Value(key any) any // 用于获取键值对 } 只要实现这一组接口就算就能算作 Context 类型。">
   <meta itemprop="datePublished" content="2024-03-30T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-03-30T00:00:00+00:00">
-  <meta itemprop="wordCount" content="859">
+  <meta itemprop="wordCount" content="856">
   <meta itemprop="keywords" content="Language/Go"><meta property="og:url" content="https://Rookiecom.github.io/posts/go-context%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/">
   <meta property="og:site_name" content="Rookiecom">
   <meta property="og:title" content="go context底层原理">
@@ -64,7 +64,7 @@ context 包定义了一组接口：
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/Rookiecom.github.io\/posts\/go-context%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86\/"
-    },"genre": "posts","keywords": "language\/go","wordcount":  859 ,
+    },"genre": "posts","keywords": "language\/go","wordcount":  856 ,
     "url": "https:\/\/Rookiecom.github.io\/posts\/go-context%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86\/","datePublished": "2024-03-30T00:00:00+00:00","dateModified": "2024-03-30T00:00:00+00:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
@@ -161,7 +161,7 @@ context 包定义了一组接口：
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Go Context底层原理</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><a href="https://github.com/Rookiecom" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://avatars.githubusercontent.com/u/108139896?v=4&amp;size=64" alt="Rookiecom" data-title="Rookiecom" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Rookiecom</a></span></div><div class="post-meta-line"><span title="发布于 2024-03-30 00:00:00"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-03-30">2024-03-30</time></span>&nbsp;<span title="859 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 900 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 5 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><a href="https://github.com/Rookiecom" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://avatars.githubusercontent.com/u/108139896?v=4&amp;size=64" alt="Rookiecom" data-title="Rookiecom" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;Rookiecom</a></span></div><div class="post-meta-line"><span title="发布于 2024-03-30 00:00:00"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-03-30">2024-03-30</time></span>&nbsp;<span title="856 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 900 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 5 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -229,8 +229,10 @@ context 包定义了一组接口：
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
 </h2><p><code>Background</code> ：一个不懂 context 使用方法的新手用来作为调用函数的默认 context 参数的函数.</p>
-<p>![[新手与context]]
-从规范来讲上，<code>Backgroud</code> 方法返回的 context 应该作为一个任务（请求）的根上下文。源码中的 <code>Backgroud</code> 方法返回一个初始化时生成的 <code>emptyCtx</code>：</p>
+<p align = "center">    
+<img src="picture/新手与context.svg#pic_center#pic_center" alt="新手与context" width="50%" height="auto">
+</p>
+<p>从规范来讲上，<code>Backgroud</code> 方法返回的 context 应该作为一个任务（请求）的根上下文。源码中的 <code>Backgroud</code> 方法返回一个初始化时生成的 <code>emptyCtx</code>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -305,8 +307,10 @@ context 包定义了一组接口：
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>创建一个新的 valueCtx，<code>valueCtx.Context</code> 指向父 ctx。在每个子任务的眼中，ctx 是一个链表，但是在整体视图中，ctx 组成的关系是一颗逆向树。</p>
-<p>![[valueCtx整体视图]]
-如何从 ctx 中获取存储的键值对信息：</p>
+<p align = "center">    
+<img src="picture/valueCtx整体视图.svg" alt="valueCtx整体视图" width="50%" height="auto">
+</p>
+<p>如何从 ctx 中获取存储的键值对信息：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -553,8 +557,10 @@ context 包定义了一组接口：
 </div>
 </div><p>可以看到还是先检查父 ctx 是否结束（为了并发安全），然后调用 <code>parent.Value(&amp;cancelCtxKey).(*cancelCtx)</code>，这一调用可以理解为将找到最近（向根节点遍历）的带有取消功能的 ctx。如果没有，说明创建的 <code>cancelCtx</code> 并不需要向父 ctx （整个链路）注册，因为创建的 <code>cancelCtx</code> 没有任何函数、协程控制。如果有，那么需要将指向最近的带有取消功能的 ctx 指针返回，用于注册创建的 <code>cancelCtx</code>。</p>
 <p>看到这里，可以整理一下 <code>cancelCtx</code> 的整体视图（下图），<code>cancelCtx</code> 的遍历动作视图仍是 <code>valueCtx</code> 的配图，但是 <code>cancelCtx</code> 的控制动作是自顶向下的：</p>
-<p>![[cancelCtx的整体视图]]
-父协程是如何通过 ctx 控制管辖的子协程的？</p>
+<p align = "center">    
+<img src="picture/cancelCtx的整体视图.svg" alt="cancelCtx的整体视图" width="50%" height="auto">
+</p>
+<p>父协程是如何通过 ctx 控制管辖的子协程的？</p>
 <p><code>ctx, cancel := context.WithCancel(context.Background())</code> 创建子 ctx 的同时，会分发给父协程一个 cancel 函数。父协程可以调用这一函数取消<strong>所有</strong>子协程。<code>cancel</code> 的源码如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
